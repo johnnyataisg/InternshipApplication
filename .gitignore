@@ -1,14 +1,12 @@
-Client/node_modules/
 .DS_Store
-Client/dist/
+node_modules/
+/dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-Client/test/unit/coverage/
-Client/test/e2e/reports/
+/test/unit/coverage/
+/test/e2e/reports/
 selenium-debug.log
-
-Server/node_modules/
 
 # Editor directories and files
 .idea
