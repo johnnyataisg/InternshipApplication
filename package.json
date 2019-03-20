@@ -13,7 +13,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "bootstrap-vue": "^2.0.0-rc.15",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^5.1.0",
+    "sqlite": "^3.0.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
