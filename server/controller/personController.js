@@ -12,7 +12,14 @@ module.exports = {
         }).then(person => {
             res.send(person)
         }).catch(error => {
-        res.status(500).send("Error: " + error)
+            res.status(500).send("Error: " + error)
+        })
+    },
+    getAllPersons: (req, res) => {
+        Person.findAll().then(personList => {
+            res.send(personList)
+        }).catch(error => {
+            res.status(500).send("Error: " + error)
         })
     }
 }

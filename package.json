@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "internship_assessment",
   "version": "1.0.0",
   "description": "A Vue.js project for an internship assessment",
   "author": "Johnny Pao <johnnypao43@gmail.com>",
@@ -13,6 +13,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "FileReader": "^0.10.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bootstrap-vue": "^2.0.0-rc.15",
@@ -22,7 +23,8 @@
     "sequelize": "^5.1.0",
     "sqlite": "^3.0.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuetify": "^1.5.7"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

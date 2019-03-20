@@ -1,5 +1,5 @@
 'use strict'
-require('../src/server.js')()
+require('../server/server.js')()
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')

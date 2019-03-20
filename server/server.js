@@ -23,4 +23,3 @@ module.exports = function() {
     })
   })
 }
-// Resets the database and launches the express app on :8081

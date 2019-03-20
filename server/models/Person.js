@@ -9,6 +9,6 @@ module.exports = function(database, type) {
         lastname: type.STRING,
         address: type.STRING,
         age: type.INTEGER,
-        picture: type.STRING
+        picture: type.BLOB
     })
 }
