@@ -1,6 +1,8 @@
 const db = require('../config/db.config.js')
 const Person = db.persons
 
+
+
 module.exports = {
     addPerson: (req, res) => {
         Person.create({
@@ -8,7 +10,7 @@ module.exports = {
             lastname: req.body.lastname,
             address: req.body.address,
             age: req.body.age,
-            picture: req.body.picture
+            picture: req.file.path
         }).then(person => {
             res.send(person)
         }).catch(error => {

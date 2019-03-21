@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <v-jumbotron>
       <v-container fill-height>
         <v-layout align-center>
@@ -20,7 +21,7 @@
         <template v-slot:activator="{ on }">
           <v-btn color="primary" dark v-on="on">Add a person</v-btn>
         </template>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" enctype="multipart/form-data" lazy-validation>
         <v-card>
           <v-card-title>
             <span class="headline">Person Information</span>
@@ -41,8 +42,7 @@
                   <v-text-field label="Age*" v-model="newPerson.age" counter maxlength='3' :rules="[rules.required, rules.counter, rules.digits]">
                   </v-text-field>
                 </v-flex>
-                <input type="file" @change="picture_uploaded($event)">
-
+                <input type="file" name="file" ref="file" @change="picture_uploaded()">
               </v-layout>
             </v-container>
             <small>*indicates required field</small>
@@ -66,6 +66,7 @@ export default {
   name: 'Index',
   data () {
     return {
+      file: null,
       msg: 'Choose what you would like to do',
       showForm: false,
       newPerson: {
@@ -91,20 +92,19 @@ export default {
     }
   },
   methods: {
-    picture_uploaded(event) {
-      this.newPerson.picture = event.target.files[0]
+    picture_uploaded() {
+      this.newPerson.picture = this.$refs.file.files[0]
     },
     createUser() {
-      var data = {
-        firstname: this.newPerson.firstname,
-        lastname: this.newPerson.lastname,
-        address: this.newPerson.address,
-        age: this.newPerson.age,
-        picture: this.newPerson.picture
-      }
+      const data = new FormData()
+      data.append('firstname', this.newPerson.firstname)
+      data.append('lastname', this.newPerson.lastname)
+      data.append('address', this.newPerson.address)
+      data.append('age', this.newPerson.age)
+      data.append('file', this.newPerson.picture)
+
       http.post('/addPerson', data).then(response => {
         console.log(response.data)
-        
         this.showForm = false
       }).catch(error => {
         console.log(error)

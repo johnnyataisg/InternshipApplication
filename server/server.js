@@ -1,15 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const Sequelize = require('sequelize')
-const PersonModel = require('./models/Person')
-const InterestModel = require('./models/Interest')
 const db = require('./config/db.config.js')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
+
+
 
 require('./route/person.route')(app)
 
