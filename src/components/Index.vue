@@ -35,12 +35,22 @@
                 <v-flex xs12 sm6 md4>
                   <v-text-field label="Last Name*" v-model="newPerson.lastname" :rules="[rules.required, rules.alpha]"></v-text-field>
                 </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Age*" v-model="newPerson.age" counter maxlength='3' :rules="[rules.required, rules.counter, rules.digits]">
+                  </v-text-field>
+                </v-flex>
                 <v-flex xs12>
                   <v-text-field label="Address*" v-model="newPerson.address" :rules="[rules.required]"></v-text-field>
                 </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Age*" v-model="newPerson.age" counter maxlength='3' :rules="[rules.required, rules.counter, rules.digits]">
-                  </v-text-field>
+                <v-flex xs12 sm4>
+                  <v-text-field label="Interests" @keyup.enter="appendInterest($event)"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm8>
+                  <div class="interest_container">
+                    <p class="interest_bar">
+                      <span v-for="interest in newPerson.interests" :key="interest">{{ interest }}, </span>
+                    </p>
+                  </div>
                 </v-flex>
                 <input type="file" name="file" ref="file" @change="picture_uploaded()">
               </v-layout>
@@ -49,8 +59,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="showForm = false; $refs.form.reset()">Close</v-btn>
-            <v-btn color="blue darken-1" flat :disabled="!valid" @click="createUser(); $refs.form.reset()">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="showForm = false; newPerson.interests = []; $refs.form.reset()">Close</v-btn>
+            <v-btn color="blue darken-1" flat :disabled="!valid" @click="createUser(); newPerson.interests = []; $refs.form.reset()">Save</v-btn>
           </v-card-actions>
         </v-card>
         </v-form>
@@ -74,7 +84,8 @@ export default {
         lastname: null,
         address: null,
         age: null,
-        picture: null
+        picture: null,
+        interests: []
       },
       rules: {
         required: value => !!value || 'Required.',
@@ -95,12 +106,18 @@ export default {
     picture_uploaded() {
       this.newPerson.picture = this.$refs.file.files[0]
     },
+    appendInterest(event) {
+      this.newPerson.interests.push(event.target.value)
+    },
     createUser() {
       const data = new FormData()
       data.append('firstname', this.newPerson.firstname)
       data.append('lastname', this.newPerson.lastname)
       data.append('address', this.newPerson.address)
       data.append('age', this.newPerson.age)
+      for (var i = 0; i < this.newPerson.interests.length; i++) {
+        data.append('interests[]', this.newPerson.interests[i])
+      }
       data.append('file', this.newPerson.picture)
 
       http.post('/addPerson', data).then(response => {
@@ -140,5 +157,18 @@ a {
   width: auto;
   background-color: white;
   z-index: 100;
+}
+.interest_container {
+  height: 100%;
+  width: 100%;
+  padding-bottom: 19px;
+}
+.interest_bar {
+  height: 100%; 
+  width: 100%; 
+  border-bottom: 0.5px solid; 
+  text-align: left;
+  margin: 0;
+  padding-top: 20px;
 }
 </style>
