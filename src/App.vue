@@ -3,7 +3,7 @@
     <v-app>
       <v-toolbar dark color="primary">
         <v-toolbar-side-icon></v-toolbar-side-icon>
-        <v-toolbar-title>Title</v-toolbar-title>
+        <v-toolbar-title>Internship Assessment</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat>Link One</v-btn>

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-jumbotron>
       <v-container fill-height>
         <v-layout align-center>
@@ -43,7 +42,7 @@
                   <v-text-field label="Address*" v-model="newPerson.address" :rules="[rules.required]"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm4>
-                  <v-text-field label="Interests" @keyup.enter="appendInterest($event)"></v-text-field>
+                  <v-text-field v-model="tempInterest" label="Interests" @keyup.enter="appendInterest($event); clearInterestBox()"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm8>
                   <div class="interest_container">
@@ -87,6 +86,7 @@ export default {
         picture: null,
         interests: []
       },
+      tempInterest: '',
       rules: {
         required: value => !!value || 'Required.',
         counter: value => value.length <= 3 || 'Max 3 digits',
@@ -103,6 +103,9 @@ export default {
     }
   },
   methods: {
+    clearInterestBox() {
+      this.tempInterest = ''
+    },
     picture_uploaded() {
       this.newPerson.picture = this.$refs.file.files[0]
     },

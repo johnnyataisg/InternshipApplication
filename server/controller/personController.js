@@ -11,7 +11,7 @@ module.exports = {
             lastname: req.body.lastname,
             address: req.body.address,
             age: req.body.age,
-            picture: req.file.path
+            picture: req.file.filename
         }).then(person => {
             for (var i = 0; i < req.body.interests.length; i++) {
                 Interest.create({
