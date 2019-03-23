@@ -1,6 +1,7 @@
 const db = require('../config/db.config.js')
 const Person = db.persons
 const Interest = db.interests
+const Op = db.Sequelize.Op
 
 //Define functions used to return api responses
 module.exports = {
@@ -24,6 +25,29 @@ module.exports = {
             res.status(500).send("Error: " + error)
         })
     },
+    //Query all persons in the database who contain a substring in their first name or last name
+    findPersons: (req, res) => {
+        Person.findAll({
+            where: {
+                [Op.or]: [
+                    {
+                        firstname: {
+                            [Op.substring]: req.query.substring
+                        }
+                    },
+                    {
+                        lastname: {
+                            [Op.substring]: req.query.substring
+                        }
+                    }
+                ]
+            }
+        }).then(personList => {
+            res.send(personList)
+        }).catch(error => {
+            res.status(500).send("Error: " + error)
+        })
+    },
     //Return a list of all persons in the database
     getAllPersons: (req, res) => {
         Person.findAll().then(personList => {
@@ -33,3 +57,12 @@ module.exports = {
         })
     }
 }
+
+/*
+    Post.findAll({
+  where: {
+    [Op.or]: [{authorId: 12}, {authorId: 13}]
+  }
+});
+// SELECT * FROM post WHERE authorId = 12 OR authorId = 13;
+*/

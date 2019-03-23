@@ -34,7 +34,7 @@
 
         <v-layout>
             <v-card id="person_card">
-                <div>
+                <div style="margin-top: 0;">
                     <img :src="image" style="height: 500px; width: 100%;">
                 </div>
                 <v-card-title primary-title style="text-align: left;">
@@ -78,7 +78,7 @@ export default {
     methods: {
         selectPerson(person) {
             this.selectedPerson = person
-            http.get('./getInterestsByPerson?id=' + this.selectedPerson.id).then(response => {
+            http.get('/getInterestsByPerson?id=' + this.selectedPerson.id).then(response => {
                 this.interests = response.data
                 console.log(response.data)
             }).catch(error => {

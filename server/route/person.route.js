@@ -4,6 +4,7 @@ const upload = require('../multer.config.js')
 module.exports = function(app) {
     const persons = require('../controller/personController.js')
     
+    app.get('/findPersons', persons.findPersons)
     app.get('/getAllPersons', persons.getAllPersons)
     app.post('/addPerson', upload.single('file'), persons.addPerson)
 }

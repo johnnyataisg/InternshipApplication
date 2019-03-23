@@ -8,16 +8,17 @@
             <v-divider class="my-3"></v-divider>
             <div class="title mb-3">{{ msg }}</div>
             <div>
-              <v-btn :to="{ name: 'PeopleList' }" class="mx-0" color="primary" large>View all people</v-btn>
+              <v-btn :to="{ name: 'PeopleList' }" class="mx-0" color="teal" dark large>View all people</v-btn>
             </div>
           </v-flex>
         </v-layout>
       </v-container>
     </v-jumbotron>
-
+    <v-btn :to="{ name: 'Search' }" color="primary" dark>Lookup a Name</v-btn>
     <v-layout row justify-center>
       <v-dialog v-model="showForm" persistent max-width="600px">
         <template v-slot:activator="{ on }">
+          
           <v-btn color="primary" dark v-on="on">Add a person</v-btn>
         </template>
         <v-form ref="form" v-model="valid" enctype="multipart/form-data" lazy-validation>
@@ -58,7 +59,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="showForm = false; newPerson.interests = []; $refs.form.reset()">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="showForm = false; clear(); $refs.form.reset()">Close</v-btn>
             <v-btn color="blue darken-1" flat :disabled="!valid" @click="createUser(); newPerson.interests = []; $refs.form.reset()">Save</v-btn>
           </v-card-actions>
         </v-card>
@@ -75,8 +76,8 @@ export default {
   name: 'Index',
   data () {
     return {
-      file: null,
       msg: 'Choose what you would like to do',
+      valid: false,
       showForm: false,
       newPerson: {
         firstname: null,
@@ -91,18 +92,32 @@ export default {
         required: value => !!value || 'Required.',
         counter: value => value.length <= 3 || 'Max 3 digits',
         digits: value => {
-          const pattern = /[0-9]+/
-          return pattern.test(value) || 'Only numbers should be entered'
+          const pattern = /[A-Za-z]+/
+          const pattern2 = /[1-9][0-9]*/
+          if (pattern.test(value)) { 
+            return 'Only numbers should be entered'
+          }
+          if (!pattern2.test(value)) {
+            return 'Age shouldn\'t start with a 0'
+          }
+          return true
         },
         alpha: value => {
-          const pattern = /([A-Z][a-z])+/
-          return pattern.test(value) || 'Only letters should be entered'
+          const pattern = /[0-9]+/
+          if (pattern.test(value)) {
+            return 'Only letters should be entered'
+          }
+          return true
         }
-      },
-      valid: false
+      }
     }
   },
   methods: {
+    clear() {
+      this.newPerson.interests = []
+      this.newPerson.picture = null
+      this.tempInterest = ''
+    },
     clearInterestBox() {
       this.tempInterest = ''
     },
